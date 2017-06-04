@@ -1,6 +1,7 @@
-cd ~
-mkdir -p ~/.vim/autoload ~/.vim/bundle; \
-    curl -Sso ~/.vim/autoload/pathogen.vim \
-    https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim
-git submodule update --init
-git submodule sync --recursive
+# Vim config
+mkdir -p ~/.vim/tmp
+mkdir -p ~/.vim/bundle
+[ ! -d ~/.vim/bundle/Vundle.vim ] && git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+cd ~/.vim/bundle/Vundle.vim
+git pull
+cd -
