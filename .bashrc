@@ -28,7 +28,7 @@ xterm*|rxvt*)
     ;;
 esac
 
-is-mac() {
+is_mac() {
     if [[ "$OSTYPE" == "darwin"* ]]; then
 		return 0
 	fi
@@ -36,7 +36,15 @@ is-mac() {
 	return 1
 }
 
-if is-mac; then
+is_ubuntu() {
+    if [[ `uname -a | grep -i ubuntu | wc -l`  -gt 0 ]]; then
+        return 0
+    fi
+
+    return 1
+}
+
+if is_mac; then
     # General auto-complete
     if [ -f `brew --prefix`/etc/bash_completion ]; then
         . `brew --prefix`/etc/bash_completion

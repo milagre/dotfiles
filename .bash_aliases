@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-if ! is-mac; then
+if ! is_mac; then
     alias ls='ls -AlF --color=auto'
 fi
 
