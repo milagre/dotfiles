@@ -1,0 +1,6 @@
+{
+    "extends": "omnivore/all",
+    "parserOptions": {
+        "sourceType": "module",
+    }
+}

@@ -1,3 +1,15 @@
+if [ ! -e ~/.ssh/id_github ]; then
+    echo 'Install ~/.ssh/id_github first'
+    exit
+fi
+
+eval `ssh-agent -s`
+ssh-add ~/.ssh/id_github
+
+# Global npm packages
+echo 'sudo npm install -g ...'
+sudo npm install -g eslint omnivore-io/eslint-config.git gulp prettyjson
+
 # Vim config
 mkdir -p ~/.vim/tmp
 mkdir -p ~/.vim/bundle
