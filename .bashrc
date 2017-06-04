@@ -28,6 +28,24 @@ xterm*|rxvt*)
     ;;
 esac
 
+is-mac() {
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+		return 0
+	fi
+
+	return 1
+}
+
+if is-mac; then
+    # General auto-complete
+    if [ -f `brew --prefix`/etc/bash_completion ]; then
+        . `brew --prefix`/etc/bash_completion
+    fi
+
+    export CLICOLOR=1
+    export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+fi
+
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
