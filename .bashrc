@@ -8,13 +8,12 @@
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
 HISTCONTROL=ignoredups:ignorespace
-
-# append to the history file, don't overwrite it
-shopt -s histappend
-
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000
 HISTFILESIZE=2000
+
+# append to the history file, don't overwrite it
+shopt -s histappend
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -29,6 +28,32 @@ xterm*|rxvt*)
     ;;
 esac
 
+is_mac() {
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+		return 0
+	fi
+
+	return 1
+}
+
+is_ubuntu() {
+    if [[ `uname -a | grep -i ubuntu | wc -l`  -gt 0 ]]; then
+        return 0
+    fi
+
+    return 1
+}
+
+if is_mac; then
+    # General auto-complete
+    if [ -f `brew --prefix`/etc/bash_completion ]; then
+        . `brew --prefix`/etc/bash_completion
+    fi
+
+    export CLICOLOR=1
+    export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+fi
+
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
@@ -37,11 +62,15 @@ if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
 fi
 
+if [ -f ~/.bash_local ]; then
+    . ~/.bash_local
+fi
+
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
-
 PATH=$PATH:$HOME/.bin
+
 
 export EDITOR=vim
 

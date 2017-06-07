@@ -2,6 +2,40 @@ set nocp
 set directory=~/.vim/tmp
 set backupskip=/tmp/*,/private/tmp/*
 
+" Install plugins
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+Plugin 'scrooloose/syntastic'
+Plugin 'tomasr/molokai'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'gko/vim-coloresque'
+Plugin 'groenewege/vim-less.git'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'othree/html5.vim'
+Plugin 'bling/vim-airline'
+Plugin 'airblade/vim-gitgutter'
+Bundle 'mattn/webapi-vim'
+Bundle 'mattn/gist-vim'
+Bundle 'nvie/vim-flake8'
+
+call vundle#end()
+
+" Plugin config
+let g:github_user="booleangate"
+let g:syntastic_javascript_checkers=['eslint']
+let g:ctrlp_working_path_mode = 'ra'
+set completeopt-=preview
+
+
+" Turn plugin features on
+filetype plugin indent on
+set autoindent
+set showmatch
+
+
 " Manage multiple buffers
 set hidden
 
@@ -13,9 +47,7 @@ set title
 
 " Turn on syntax highlighting
 syntax on
-
-" Background, colorscheme, etc
-set background=dark
+colorscheme molokai
 
 " Utility features
 set ruler
@@ -27,13 +59,6 @@ set bs=2
 " Set the terminal font encoding
 set encoding=utf-8
 set termencoding=utf-8
-
-" Turn plugin features on
-filetype on
-filetype plugin on
-filetype indent on
-set autoindent
-set showmatch
 
 " Bash-like tab completion
 set wildmenu
@@ -141,6 +166,3 @@ set hlsearch
 
 " Enable extended % matching
 runtime macros/matchit.vim
-
-execute pathogen#infect()
-

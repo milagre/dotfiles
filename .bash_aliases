@@ -1,17 +1,25 @@
 #!/bin/bash
-# ~/.bash_aliases
+
+
+if ! is_mac; then
+    alias ls='ls -AlF --color=auto'
+fi
 
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
-alias ls='ls -AlF --color=auto'
-alias l='ls'
+alias l='ls -l'
 alias v='vim'
 alias tf='tail -f'
+# Enables alias expansion while using sudo
+alias sudo='sudo '
+
 if command -v ack-grep >/dev/null; then
   alias ack='ack-grep'
 fi
-# Enables alias expansion while using sudo
-alias sudo='sudo '
+
+if command -v thefuck >/dev/null; then
+    eval "$(thefuck --alias)"
+fi
 
 function c() { curl -vvv $@; echo; }
