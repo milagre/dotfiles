@@ -38,8 +38,12 @@ set hlsearch    " Highlight search term matches
 " Display settings
 set number
 set guifont=Consolas:h11:cANSI| " Fix molokai italics/gui only
-colorscheme molokai
 set cursorline
+if has("gui_running")
+    colorscheme molokai
+else
+    set background=dark
+endif
 
 " Spacing and tabbing
 set smarttab
@@ -51,7 +55,7 @@ set textwidth=100
 set nowrap
    
 " Filetypes
-autocmd BufRead,BufNewFile *.txt setfiletype txt
+autocmd BufEnter,BufRead,BufNewFile *.txt setfiletype txt
 
 " Autocmd utilities
 autocmd BufEnter * silent! lcd %:p:h|                           " cd to opened file location
