@@ -14,7 +14,8 @@ Plugin 'txt.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'b4winckler/vim-angry'
 Plugin 'ctrlpvim/ctrlp.vim'
-"Plugin 'tpope/vim-commentary'
+Plugin 'vim-airline/vim-airline'
+Plugin 'tpope/vim-commentary'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -70,3 +71,6 @@ let NERDTreeWinSize=50
 " Ctrl-P Settings
 let g:ctrlp_map='<c-p>'
 let g:ctrlp_cmd = 'CtrlPMRU'|  " Start Ctrl P in MRU mode
+
+" vim-airline Settings
+let g:airline#extensions#tabline#enabled = 1
