@@ -212,6 +212,7 @@ autocmd VimEnter * nmap <F3> :NERDTreeToggle<CR>
 autocmd VimEnter * imap <F3> <Esc>:NERDTreeToggle<CR>a
 let NERDTreeQuitOnOpen=1
 let NERDTreeWinSize=50
+let NERDTreeShowHidden=1
 
 " Ctrl-P Settings
 let g:ctrlp_map='<c-p>'
