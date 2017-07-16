@@ -114,6 +114,20 @@ nnoremap <C-j> :join<CR>
 nnoremap <C-f> :let @/ = @"<CR>|  " Find yanked text
 set pastetoggle=<F2>
 
+" Tab -- indent at beginning of line, otherwise autocomplete  [Insert Mode]
+inoremap <silent> <Tab> <C-R>=DwiwITab()<cr>
+inoremap <silent> <S-Tab> <C-N>
+
+" Taken from Gary Bernhardt's vimrc [1]
+function! DwiwITab()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+
 " Vim settings
 set clipboard=unnamed
 set hidden|     " Let user switch away from buffers with unsaved changes
@@ -182,6 +196,16 @@ autocmd BufNewFile,BufRead *.css set filetype=less
 autocmd BufEnter * silent! lcd %:p:h|                           " cd to opened file location
 autocmd FocusLost,TabLeave * call feedkeys("\<C-\>\<C-n>")|     " Normal mode on focus lost
 autocmd FileType c,cpp,java,php,python,javascript,json,ruby,markdown autocmd BufWritePre * :%s/\s\+$//e
+
+"python with virtualenv support
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+    project_base_dir = os.environ['VIRTUAL_ENV']
+    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+    execfile(activate_this, dict(__file__=activate_this))
+EOF
 
 " NerdTree Settings
 autocmd VimEnter * nmap <F3> :NERDTreeToggle<CR>
