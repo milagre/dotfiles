@@ -16,6 +16,8 @@ Plugin 'b4winckler/vim-angry'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'tpope/vim-commentary'
+Plugin 'nvie/vim-flake8'
+Plugin 'othree/html5.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -169,10 +171,17 @@ endif
    
 " Filetypes
 autocmd BufEnter,BufRead,BufNewFile *.txt setfiletype txt
+autocmd FileType pau FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,xhtml,xml set omnifunc=htmlcomplete#CompleteTags tw=0
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJSython set omnifunc=pythoncomplete#Complete et sw=4 sts=4 ts=4 ai
+autocmd BufNewFile,BufRead *.lss set filetype=less
+autocmd BufNewFile,BufRead *.less set filetype=less
+autocmd BufNewFile,BufRead *.css set filetype=less
 
 " Autocmd utilities
 autocmd BufEnter * silent! lcd %:p:h|                           " cd to opened file location
 autocmd FocusLost,TabLeave * call feedkeys("\<C-\>\<C-n>")|     " Normal mode on focus lost
+autocmd FileType c,cpp,java,php,python,javascript,json,ruby,markdown autocmd BufWritePre * :%s/\s\+$//e
 
 " NerdTree Settings
 autocmd VimEnter * nmap <F3> :NERDTreeToggle<CR>
@@ -187,3 +196,7 @@ let g:ctrlp_cmd = 'CtrlPMRU'|  " Start Ctrl P in MRU mode
 " vim-airline Settings
 let g:airline#extensions#tabline#enabled = 1
 set noshowmode  " vim-airline displays the mode
+
+" flake8 Settings
+autocmd FileType python map <buffer> <F5> :call Flake8()<CR>
+autocmd BufWritePost *.py call Flake8()
