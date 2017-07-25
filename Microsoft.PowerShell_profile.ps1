@@ -161,12 +161,10 @@ function EditProfile
 
 Set-Alias edit-profile EditProfile
 
-function UpdateProfile
+function update-profile
 {
-    cp $PROFILE c:\projects\personal\machinesetup\Microsoft.PowerShell_profile.ps1
+    cp $PROFILE c:\projects\personal\dotfiles\Microsoft.PowerShell_profile.ps1
 }
-
-Set-Alias update-profile UpdateProfile
 
 New-Alias which get-command
 
