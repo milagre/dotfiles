@@ -29,16 +29,16 @@ function ViewMergedLocal()
 
 Set-Alias vml ViewMergedLocal
 
-function Coalesce($a, $b) 
-{ 
-    if ($a -ne $null) 
-    { 
-	$a 
-    } 
-    else 
-    { 
-	$b 
-    } 
+function Coalesce($a, $b)
+{
+    if ($a -ne $null)
+    {
+        $a
+    }
+    else
+    {
+        $b
+    }
 }
 
 #See possible commands here: https://tortoisegit.org/docs/tortoisegit/tgit-automation.html
@@ -62,14 +62,14 @@ Set-Alias git-show-unpushed-commits ShowUnpushedCommits
 
 function ShowDeletions($rangeSpecification)
 {
-	git log $rangeSpecification --shortstat | sls "([\d]+) deletions" |% { $_.Matches } |% { $_.groups[1].value } | Measure-Object -Sum
+    git log $rangeSpecification --shortstat | sls "([\d]+) deletions" |% { $_.Matches } |% { $_.groups[1].value } | Measure-Object -Sum
 }
 
 Set-Alias git-deletions ShowDeletions
 
 function GitChangeLog($rangeSpecification)
 {
-	git log --merges --grep="pull request" --pretty=format:'%C(yellow)%h%Creset - %s%n  %an %Cgreen(%cr)%C(bold blue)%d%Creset%n' $rangeSpecification
+    git log --merges --grep="pull request" --pretty=format:'%C(yellow)%h%Creset - %s%n  %an %Cgreen(%cr)%C(bold blue)%d%Creset%n' $rangeSpecification
 }
 
 Set-Alias git-cl GitChangeLog
@@ -113,18 +113,18 @@ function nunit($path, $Version = "cwd")
     $dllName = $path | Split-Path -Leaf
     if (-not $path.EndsWith(".dll"))
     {
-	$dll = Join-Path $path "bin\debug\$dllName.dll" -Resolve -ErrorAction SilentlyContinue
+    $dll = Join-Path $path "bin\debug\$dllName.dll" -Resolve -ErrorAction SilentlyContinue
     }
 
     if (-not $dll)
     {
-	$dll = Join-Path $path "bin\Development\$dllName.dll" -Resolve -ErrorAction SilentlyContinue
+    $dll = Join-Path $path "bin\Development\$dllName.dll" -Resolve -ErrorAction SilentlyContinue
     }
 
     switch($version)
     {
-	"cwd" { . $(gci *tools*\NUnit\nunit-x86.exe) $dll }
-	"3.6" { . "C:\Program Files\NUnit-Gui-0.3\nunit-gui.exe" $dll } 
+    "cwd" { . $(gci *tools*\NUnit\nunit-x86.exe) $dll }
+    "3.6" { . "C:\Program Files\NUnit-Gui-0.3\nunit-gui.exe" $dll }
     }
 }
 
@@ -175,7 +175,7 @@ function pull
     git pop
 }
 
-function off 
+function off
 {
     Stop-Computer -Force -AsJob
 }
@@ -191,6 +191,11 @@ function Convert-ToUnixdate ($datetime) {
    $timespan.TotalSeconds
 }
 
+function Convert-FromJsonNetDate ($date) {
+   $utc = ([datetime]'1/1/1970').AddMilliseconds($date)
+   $utc.ToLocalTime()
+}
+
 function Grep-AliasCommand($pattern)
 {
     Get-Alias |? { $_.ReferencedCommand.Name.Contains($pattern) }
@@ -199,4 +204,19 @@ function Grep-AliasCommand($pattern)
 New-Alias python27 C:\Tools\python2\python.exe
 New-Alias python36 C:\Python36\python.exe
 
-pageant.exe $HOME\.ssh\putty.ppk
+function use-agent-env()
+{
+    C:\projects\agent\env\Scripts\activate.ps1
+    $env:PYTHONPATH = "C:\projects\agent\src;C:\projects\agent-aloha\src;C:\projects\agent-beyond\src;C:\projects\agent-cloud-connect\src;C:\projects\agent-common\src;C:\projects\agent-doshii\src;C:\projects\agent-infogenesis\src;C:\projects\agent-micros3700\src;C:\projects\agent-northstar\src;C:\projects\agent-positouch\src;C:\projects\agent-squirrel\src;C:\projects\agent-virtual\src;C:\projects\debug-helpers\src;"
+}
+
+if (-not $(ps pageant -ErrorAction SilentlyContinue))
+{
+    Start-Job -ScriptBlock {
+        $mtx = New-Object System.Threading.Mutex($false, "pageant")
+        if ($mtx.WaitOne(.5))
+        {
+            pageant.exe $HOME\.ssh\putty.ppk
+        }
+    } | Out-Null
+}
