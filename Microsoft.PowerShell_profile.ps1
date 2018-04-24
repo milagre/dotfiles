@@ -220,3 +220,6 @@ if (-not $(ps pageant -ErrorAction SilentlyContinue))
         }
     } | Out-Null
 }
+
+$env:GOPATH = "C:\projects\go"
+$env:TERM='xterm' # http://stefano.salvatori.cl/blog/2017/12/08/how-to-fix-open_stackdumpfile-dumping-stack-trace-to-less-exe-stackdump-gitcygwin/
