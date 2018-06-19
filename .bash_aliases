@@ -13,5 +13,6 @@ if command -v ack-grep >/dev/null; then
 fi
 # Enables alias expansion while using sudo
 alias sudo='sudo '
+alias como-webhooks="cd $GOPATH/src/github.com/omnivore/como-webhooks"
 
 function c() { curl -vvv $@; echo; }

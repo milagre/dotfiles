@@ -29,6 +29,8 @@ xterm*|rxvt*)
     ;;
 esac
 
+export GOPATH=~/dev/go
+
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
@@ -42,8 +44,6 @@ fi
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 PATH=$PATH:$HOME/.bin
-
-export GOPATH=~/dev/go
 
 if [ -x "$(command -v go)" ]; then
     PATH=$PATH:$(go env GOPATH)/bin
