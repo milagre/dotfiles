@@ -43,6 +43,8 @@ PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 PATH=$PATH:$HOME/.bin
 
+export GOPATH=~/dev/go
+
 if [ -x "$(command -v go)" ]; then
     PATH=$PATH:$(go env GOPATH)/bin
     GOPATH=$(go env GOPATH)
@@ -50,3 +52,7 @@ fi
 
 export EDITOR=vim
 
+start-ssh-agent() {
+    eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/id_rsa
+}
