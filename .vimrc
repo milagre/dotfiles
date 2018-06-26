@@ -18,6 +18,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'tpope/vim-commentary'
 Plugin 'nvie/vim-flake8'
 Plugin 'othree/html5.vim'
+Plugin 'fatih/vim-go'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -182,12 +183,12 @@ if has("persistent_undo") == 1
         call mkdir(expand(&undodir), "p")
     endif
 endif
-   
+
 " Filetypes
 autocmd BufEnter,BufRead,BufNewFile *.txt setfiletype txt
 autocmd FileType pau FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,xhtml,xml set omnifunc=htmlcomplete#CompleteTags tw=0
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJSython set omnifunc=pythoncomplete#Complete et sw=4 sts=4 ts=4 ai
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd BufNewFile,BufRead *.lss set filetype=less
 autocmd BufNewFile,BufRead *.less set filetype=less
 autocmd BufNewFile,BufRead *.css set filetype=less
