@@ -19,6 +19,7 @@ Plugin 'tpope/vim-commentary'
 Plugin 'nvie/vim-flake8'
 Plugin 'othree/html5.vim'
 Plugin 'fatih/vim-go'
+Plugin 'godlygeek/tabular'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -129,6 +130,9 @@ function! DwiwITab()
     endif
 endfunction
 
+" Allow . to apply to every line in visual selection
+vnoremap . :normal .<CR>
+
 " Vim settings
 set clipboard=unnamed
 set hidden|     " Let user switch away from buffers with unsaved changes
@@ -158,6 +162,7 @@ set softtabstop=4
 set shiftwidth=4
 set textwidth=100
 set nowrap
+set formatoptions-=t
 
 " ##### Backup, swap and undo file settings #####
 let s:vimfiles = $HOME . '/.vim'
@@ -192,6 +197,7 @@ autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd BufNewFile,BufRead *.lss set filetype=less
 autocmd BufNewFile,BufRead *.less set filetype=less
 autocmd BufNewFile,BufRead *.css set filetype=less
+autocmd FileType markdown,txt set formatoptions-=t
 
 " Autocmd utilities
 autocmd BufEnter * silent! lcd %:p:h|                           " cd to opened file location
@@ -199,14 +205,14 @@ autocmd FocusLost,TabLeave * call feedkeys("\<C-\>\<C-n>")|     " Normal mode on
 autocmd FileType c,cpp,java,php,python,javascript,json,ruby,markdown autocmd BufWritePre * :%s/\s\+$//e
 
 "python with virtualenv support
-py << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-    project_base_dir = os.environ['VIRTUAL_ENV']
-    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-    execfile(activate_this, dict(__file__=activate_this))
-EOF
+"py << EOF
+"import os
+"import sys
+" if 'VIRTUAL_ENV' in os.environ:
+"     project_base_dir = os.environ['VIRTUAL_ENV']
+"     activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"     execfile(activate_this, dict(__file__=activate_this))
+" EOF
 
 " NerdTree Settings
 autocmd VimEnter * nmap <F3> :NERDTreeToggle<CR>
@@ -226,3 +232,42 @@ set noshowmode  " vim-airline displays the mode
 " flake8 Settings
 autocmd FileType python map <buffer> <F5> :call Flake8()<CR>
 autocmd BufWritePost *.py call Flake8()
+
+" Tabular Settings
+inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+
+function! s:align()
+  let p = '^\s*|\s.*\s|\s*$'
+  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+    Tabularize/|/l1
+    normal! 0
+    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+  endif
+endfunction
+
+" Diff buffers
+" https://stackoverflow.com/questions/3619146/vimdiff-two-subroutines-in-same-file/3621806#3621806
+let g:diffed_buffers=[]
+function DiffText(a, b, diffed_buffers)
+    enew
+    setlocal buftype=nowrite
+    call add(a:diffed_buffers, bufnr('%'))
+    call setline(1, split(a:a, "\n"))
+    diffthis
+    vnew
+    setlocal buftype=nowrite
+    call add(a:diffed_buffers, bufnr('%'))
+    call setline(1, split(a:b, "\n"))
+    diffthis
+endfunction
+function WipeOutDiffs(diffed_buffers)
+    for buffer in a:diffed_buffers
+        execute 'bwipeout! '.buffer
+    endfor
+endfunction
+nnoremap <special> <C-d> :call DiffText(@a, @b, g:diffed_buffers)<CR>
+
+nnoremap <special> <C-d><C-d> :call WipeOutDiffs(g:diffed_buffers) <bar> let g:diffed_buffers=[]<CR>
+
