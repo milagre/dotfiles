@@ -186,7 +186,20 @@ function Convert-FromUnixdate ($unixDate) {
 }
 
 function Convert-ToUnixdate ($datetime) {
-   $utc = $datetime.ToUniversalTime()
+   $utc = ([DateTime]$datetime).ToUniversalTime()
+   $timespan = $utc - ([datetime]'1/1/1970')
+   $timespan.TotalSeconds
+}
+
+function ConvertPst-FromUnixdate ($unixDate) {
+   $utc = ([datetime]'1/1/1970').AddSeconds($unixDate)
+   $pstInfo = [TimeZoneInfo]::FindSystemTimeZoneById("Pacific Standard Time")
+   [TimeZoneInfo]::ConvertTimeFromUtc($utc, $pstInfo)
+}
+
+function ConvertPst-ToUnixdate ($datetime) {
+   $pstInfo = [TimeZoneInfo]::FindSystemTimeZoneById("Pacific Standard Time")
+   $utc = [TimeZoneInfo]::ConvertTimeToUtc([DateTime]$datetime, $pstInfo)
    $timespan = $utc - ([datetime]'1/1/1970')
    $timespan.TotalSeconds
 }
