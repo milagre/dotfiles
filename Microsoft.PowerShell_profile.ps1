@@ -41,6 +41,17 @@ function Coalesce($a, $b)
     }
 }
 
+function Select-Zip {
+    [CmdletBinding()]
+    Param(
+        $First,
+        $Second,
+        $ResultSelector = { ,$args }
+    )
+
+    [System.Linq.Enumerable]::Zip($First, $Second, [Func[Object, Object, Object[]]]$ResultSelector)
+}
+
 #See possible commands here: https://tortoisegit.org/docs/tortoisegit/tgit-automation.html
 function TortoiseGit($command, $path)
 {
@@ -229,7 +240,7 @@ if (-not $(ps pageant -ErrorAction SilentlyContinue))
         $mtx = New-Object System.Threading.Mutex($false, "pageant")
         if ($mtx.WaitOne(.5))
         {
-            pageant.exe $HOME\.ssh\putty.ppk
+            pageant $(Resolve-Path ~\.ssh\id_rsa.ppk)
         }
     } | Out-Null
 }
@@ -245,6 +256,14 @@ function Start-RaxHVTunnels
 
     Start-Job -Name "Tunnel - RAX: jlevitt_AlohaTS-Term-base_2018-04-04" -ScriptBlock {
         C:\Users\jlevitt\.raxvm\omniprox.exe -host router.raxvm.pos-api.com -port 63523
+    } | Out-Null
+
+    Start-Job -Name "Tunnel - RAX: jlevitt_DinerWare_2017-08-30" -ScriptBlock {
+        C:\Users\jlevitt\.raxvm\omniprox.exe -host router.raxvm.pos-api.com -port 63396
+    } | Out-Null
+
+    Start-Job -Name "Tunnel - RAX: jlevitt_MicrosRES5_Scott_20170711" -ScriptBlock {
+        C:\Users\jlevitt\.raxvm\omniprox.exe -host router.raxvm.pos-api.com -port 63316
     } | Out-Null
 }
 
@@ -275,7 +294,84 @@ function Start-HaywardHVTunnels
     } | Out-Null
 }
 
-function Stop-HaywardHVTunnels
+function Start-AwsLinuxTest1Tunnel
 {
-    Get-Job |? { $_.Name.Contains("Tunnel - Hayward:") } | Remove-Job -Force
+    Start-Job -Name "Tunnel - AwsLinuxTest1" -ScriptBlock {
+        while ($true)
+        {
+            ssh -i C:\Users\jlevitt\.ssh\aws-linux-test1.pem ec2-user@ec2-52-14-31-241.us-east-2.compute.amazonaws.com
+        }
+    } | Out-Null
+}
+
+function Stop-AwsLinuxTest1Tunnel
+{
+    Get-Job -Name "Tunnel - AwsLinuxTest1" | Remove-Job -Force
+}
+
+function Start-MySqlTunnel
+{
+    Start-Job -Name "Tunnel - MySql" -ScriptBlock {
+        while ($true)
+        {
+            ssh -N -L 3307:localhost:3306 jlevitt
+        }
+    } | Out-Null
+}
+
+function Stop-MySqlTunnel
+{
+    Get-Job -Name "Tunnel - MySql" | Remove-Job -Force
+}
+
+function Start-SftpTunnel
+{
+    Start-Job -Name "Tunnel - Sftp" -ScriptBlock {
+        while ($true)
+        {
+            ssh -N -L 2020:jlevitt:22 jlevitt
+        }
+    } | Out-Null
+}
+
+function Stop-SftpTunnel
+{
+    Get-Job -Name "Tunnel - Sftp" | Remove-Job -Force
+}
+
+function Start-DinerwareTunnel
+{
+    Start-Job -Name "Tunnel - Dinerware" -ScriptBlock {
+        while ($true)
+        {
+            ssh -4 -L22222:127.0.0.1:22222 jlevitt@jump.dev-va1.internal.pos-api.com
+        }
+    } | Out-Null
+}
+
+function Stop-DinerwareTunnel
+{
+    Get-Job -Name "Tunnel - Dinerware" | Remove-Job -Force
+}
+
+function Start-JlevittTunnel
+{
+    Start-Job -Name "Tunnel - Jlevitt" -ScriptBlock {
+        while ($true)
+        {
+            ssh -M 2023:2024 jlevitt
+        }
+    } | Out-Null
+}
+
+function Stop-JlevittTunnel
+{
+    Get-Job -Name "Tunnel - Jlevitt" | Remove-Job -Force
+}
+
+
+
+function Get-DebugBuild
+{
+    "$([DateTime]::Today.ToString("yy.M.d")).$(Get-Random -Minimum 1 -Maximum 1000)"
 }
