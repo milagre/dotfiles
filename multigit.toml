@@ -1,0 +1,165 @@
+log_level = 'debug'
+
+#### Each [[repo]] hash registers a repo in this project.
+#
+# Keys:
+#   - dir (required): The relative path to the project root where the repo is located.
+#   - short-name (optional): Defaults to `dir`. Used to reference the repo in cli arguments, etc.
+#   - remote (optional): The remote repo used only on `mgit clone`.
+#   - branch (optional): The default working branch for the repo.
+#   - aliases (optional): A list of aliases for the repo. Similar to `short-name`.
+
+# Agent
+[[repo]]
+dir = 'agent'
+remote = 'git@github.com:omnivore/agent.git'
+
+[[repo]]
+dir = 'agent-common'
+remote = 'git@github.com:omnivore/agent-common.git'
+
+# Installed
+
+[[repo]]
+dir = 'agent-aloha'
+remote = 'git@github.com:omnivore/agent-aloha.git'
+
+[[repo]]
+dir = 'agent-azbar'
+remote = 'git@github.com:omnivore/agent-azbar.git'
+
+[[repo]]
+dir = 'agent-dinerware'
+remote = 'git@github.com:omnivore/agent-dinerware.git'
+
+[[repo]]
+dir = 'agent-infogenesis'
+remote = 'git@github.com:omnivore/agent-infogenesis.git'
+
+[[repo]]
+dir = 'agent-maitred'
+remote = 'git@github.com:omnivore/agent-maitred.git'
+
+[[repo]]
+dir = 'agent-micros3700'
+remote = 'git@github.com:omnivore/agent-micros3700.git'
+
+[[repo]]
+dir = 'agent-positouch'
+remote = 'git@github.com:omnivore/agent-positouch.git'
+
+[[repo]]
+dir = 'agent-simphony'
+remote = 'git@github.com:omnivore/agent-simphony.git'
+
+[[repo]]
+dir = 'agent-simphony1'
+remote = 'git@github.com:omnivore/agent-simphony1.git'
+
+[[repo]]
+dir = 'agent-simphony2'
+remote = 'git@github.com:omnivore/agent-simphony2.git'
+
+[[repo]]
+dir = 'agent-template'
+remote = 'git@github.com:omnivore/agent-template.git'
+
+[[repo]]
+dir = 'agent-xpient'
+remote = 'git@github.com:omnivore/agent-xpient.git'
+
+[[repo]]
+dir = 'agent-squirrel'
+remote = 'git@github.com:omnivore/agent-squirrel.git'
+
+[[repo]]
+dir = 'agent-tend'
+remote = 'git@github.com:omnivore/agent-tend.git'
+
+# Gateway
+[[repo]]
+dir = 'agent-brink'
+remote = 'git@github.com:omnivore/agent-brink.git'
+
+[[repo]]
+dir = 'agent-cloudconnect'
+remote = 'git@github.com:omnivore/agent-cloudconnect.git'
+
+[[repo]]
+dir = 'agent-doshii'
+remote = 'git@github.com:omnivore/agent-doshii.git'
+
+[[repo]]
+dir = 'agent-northstar'
+remote = 'git@github.com:omnivore/agent-northstar.git'
+
+[[repo]]
+dir = 'agent-toast'
+remote = 'git@github.com:omnivore/agent-toast.git'
+
+[[repo]]
+dir = 'agent-virtual'
+remote = 'git@github.com:omnivore/agent-virtual.git'
+
+
+# Como
+[[repo]]
+dir = 'como-ui'
+remote = 'git@github.com:omnivore/como-ui.git'
+
+[[repo]]
+dir = 'como-aloha'
+remote = 'git@github.com:omnivore/como-aloha.git'
+
+[[repo]]
+dir = 'como-tcp'
+remote = 'git@github.com:omnivore/como-tcp.git'
+
+# Groups are predefined working sets to be used with `mgit workon -g [GROUP]`
+[groups]
+core = ['agent', 'agent-common']
+
+build = [
+    'agent',
+    'agent-common',
+    'agent-aloha',
+    'agent-azbar',
+    'agent-dinerware',
+    'agent-infogenesis',
+    'agent-maitred',
+    'agent-micros3700',
+    'agent-positouch',
+    'agent-simphony',
+    'agent-simphony1',
+    'agent-simphony2',
+    'agent-template',
+    'agent-xpient',
+    'agent-squirrel',
+    'agent-tend',
+]
+
+como = [
+    'como-ui',
+    'como-aloha',
+    'como-tcp',
+]
+
+aloha = ['agent', 'agent-common', 'agent-aloha']
+brink = ['agent', 'agent-common', 'agent-brink']
+cloudconnect = ['agent', 'agent-common', 'agent-cloudconnect']
+dinerware = ['agent', 'agent-common', 'agent-dinerware']
+doshii = ['agent', 'agent-common', 'agent-doshii']
+infogenesis = ['agent', 'agent-common', 'agent-infogenesis']
+maitred = ['agent', 'agent-common', 'agent-maitred']
+micros3700 = ['agent', 'agent-common', 'agent-micros3700']
+northstar = ['agent', 'agent-common', 'agent-northstar']
+positouch = ['agent', 'agent-common', 'agent-positouch']
+simphony = ['agent', 'agent-common', 'agent-simphony']
+simphony1 = ['agent', 'agent-common', 'agent-simphony1']
+simphony2 = ['agent', 'agent-common', 'agent-simphony2']
+squirrel = ['agent', 'agent-common', 'agent-squirrel']
+template = ['agent', 'agent-common', 'agent-template']
+tend = ['agent', 'agent-common', 'agent-tend']
+toast = ['agent', 'agent-common', 'agent-toast']
+virtual = ['agent', 'agent-common', 'agent-virtual']
+xpient = ['agent', 'agent-common', 'agent-xpient']
