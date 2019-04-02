@@ -146,3 +146,6 @@ execute pathogen#infect()
 
 " eslint for JS linting
 let g:syntastic_javascript_checkers=['eslint']
+
+source ~/.vim/rc/go.vimrc
+
