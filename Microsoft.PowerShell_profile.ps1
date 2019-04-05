@@ -241,6 +241,7 @@ if (-not $(ps pageant -ErrorAction SilentlyContinue))
         if ($mtx.WaitOne(.5))
         {
             pageant $(Resolve-Path ~\.ssh\id_rsa.ppk)
+            $mtx.ReleaseMutex()
         }
     } | Out-Null
 }
@@ -294,6 +295,23 @@ function Start-HaywardHVTunnels
     } | Out-Null
 }
 
+function Stop-HaywardHVTunnels
+{
+    Get-Job |? { $_.Name.Contains("Tunnel - Hayward:") } | Remove-Job -Force
+}
+
+function Start-AzureHVTunnels
+{
+    Start-Job -Name "Tunnel - Azure: jlevitt-POSi641-20180103" -ScriptBlock {
+        C:\Users\jlevitt\.raxvm\omniprox.exe -host router.azure.pos-api.com -port 10000
+    } | Out-Null
+}
+
+function Stop-AzureHVTunnels
+{
+    Get-Job |? { $_.Name.Contains("Tunnel - Azure:") } | Remove-Job -Force
+}
+
 function Start-AwsLinuxTest1Tunnel
 {
     Start-Job -Name "Tunnel - AwsLinuxTest1" -ScriptBlock {
@@ -309,9 +327,9 @@ function Stop-AwsLinuxTest1Tunnel
     Get-Job -Name "Tunnel - AwsLinuxTest1" | Remove-Job -Force
 }
 
-function Start-MySqlTunnel
+function Start-MySqlTunnelDev
 {
-    Start-Job -Name "Tunnel - MySql" -ScriptBlock {
+    Start-Job -Name "Tunnel - MySql (Dev)" -ScriptBlock {
         while ($true)
         {
             ssh -N -L 3307:localhost:3306 jlevitt
@@ -319,9 +337,24 @@ function Start-MySqlTunnel
     } | Out-Null
 }
 
-function Stop-MySqlTunnel
+function Stop-MySqlTunnelDev
 {
-    Get-Job -Name "Tunnel - MySql" | Remove-Job -Force
+    Get-Job -Name "Tunnel - MySql (Dev)" | Remove-Job -Force
+}
+
+function Start-MySqlTunnelStage
+{
+    Start-Job -Name "Tunnel - MySql (Stage)" -ScriptBlock {
+        while ($true)
+        {
+            ssh -N -L 3308:stage-gateway.cgvzdzphnxrt.us-west-2.rds.amazonaws.com:3306 jump-stage
+        }
+    } | Out-Null
+}
+
+function Stop-MySqlTunnelStage
+{
+    Get-Job -Name "Tunnel - MySql (Stage)" | Remove-Job -Force
 }
 
 function Start-SftpTunnel
