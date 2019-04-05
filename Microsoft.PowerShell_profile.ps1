@@ -249,55 +249,16 @@ if (-not $(ps pageant -ErrorAction SilentlyContinue))
 $env:GOPATH = "C:\projects\go"
 $env:TERM='xterm' # http://stefano.salvatori.cl/blog/2017/12/08/how-to-fix-open_stackdumpfile-dumping-stack-trace-to-less-exe-stackdump-gitcygwin/
 
-function Start-RaxHVTunnels
+function Start-Omniprox
 {
-    Start-Job -Name "Tunnel - RAX: jlevitt-POSi641-20180103" -ScriptBlock {
-        C:\Users\jlevitt\.raxvm\omniprox.exe -host router.raxvm.pos-api.com -port 63281
-    } | Out-Null
-
-    Start-Job -Name "Tunnel - RAX: jlevitt_AlohaTS-Term-base_2018-04-04" -ScriptBlock {
-        C:\Users\jlevitt\.raxvm\omniprox.exe -host router.raxvm.pos-api.com -port 63523
-    } | Out-Null
-
-    Start-Job -Name "Tunnel - RAX: jlevitt_DinerWare_2017-08-30" -ScriptBlock {
-        C:\Users\jlevitt\.raxvm\omniprox.exe -host router.raxvm.pos-api.com -port 63396
-    } | Out-Null
-
-    Start-Job -Name "Tunnel - RAX: jlevitt_MicrosRES5_Scott_20170711" -ScriptBlock {
-        C:\Users\jlevitt\.raxvm\omniprox.exe -host router.raxvm.pos-api.com -port 63316
+    Start-Job -Name "Tunnel - Omniprox" -ScriptBlock {
+        C:\Users\jlevitt\.raxvm\omniprox.exe
     } | Out-Null
 }
 
-function Stop-RaxHVTunnels
+function Stop-Omniprox
 {
-    Get-Job |? { $_.Name.Contains("Tunnel - RAX:") } | Remove-Job -Force
-}
-
-function Start-HaywardHVTunnels
-{
-    Start-Job -Name "Tunnel - Hayward: Hypervisor" -ScriptBlock {
-        C:\Users\jlevitt\.raxvm\omniprox.exe -port 3388
-    } | Out-Null
-    Start-Job -Name "Tunnel - Hayward: QS BOH" -ScriptBlock {
-        C:\Users\jlevitt\.raxvm\omniprox.exe -port 3387
-    } | Out-Null
-    Start-Job -Name "Tunnel - Hayward: QS Master terminal" -ScriptBlock {
-        C:\Users\jlevitt\.raxvm\omniprox.exe -port 3386
-    } | Out-Null
-    Start-Job -Name "Tunnel - Hayward: TS BOH" -ScriptBlock {
-        C:\Users\jlevitt\.raxvm\omniprox.exe -port 3385
-    } | Out-Null
-    Start-Job -Name "Tunnel - Hayward: TS Master terminal" -ScriptBlock {
-        C:\Users\jlevitt\.raxvm\omniprox.exe -port 3384
-    } | Out-Null
-    Start-Job -Name "Tunnel - Hayward: Squirrel-Dev" -ScriptBlock {
-        C:\Users\jlevitt\.raxvm\omniprox.exe -port 3383
-    } | Out-Null
-}
-
-function Stop-HaywardHVTunnels
-{
-    Get-Job |? { $_.Name.Contains("Tunnel - Hayward:") } | Remove-Job -Force
+    Get-Job |? { $_.Name -eq "Tunnel - Omniprox" } | Remove-Job -Force
 }
 
 function Start-AzureHVTunnels
