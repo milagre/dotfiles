@@ -234,6 +234,11 @@ function use-agent-env()
     $env:PYTHONPATH = "C:\projects\agent\src;C:\projects\agent-aloha\src;C:\projects\agent-beyond\src;C:\projects\agent-cloud-connect\src;C:\projects\agent-common\src;C:\projects\agent-doshii\src;C:\projects\agent-infogenesis\src;C:\projects\agent-micros3700\src;C:\projects\agent-northstar\src;C:\projects\agent-positouch\src;C:\projects\agent-squirrel\src;C:\projects\agent-virtual\src;C:\projects\debug-helpers\src;"
 }
 
+function use-mgit-env()
+{
+    C:\projects\multigit\env\Scripts\activate.ps1
+}
+
 if (-not $(ps pageant -ErrorAction SilentlyContinue))
 {
     Start-Job -ScriptBlock {
@@ -244,6 +249,11 @@ if (-not $(ps pageant -ErrorAction SilentlyContinue))
             $mtx.ReleaseMutex()
         }
     } | Out-Null
+}
+
+if (-not $(ps AutoHotkey -ErrorAction SilentlyContinue))
+{
+    ~\default.ahk
 }
 
 $env:GOPATH = "C:\projects\go"
@@ -259,6 +269,12 @@ function Start-Omniprox
 function Stop-Omniprox
 {
     Get-Job |? { $_.Name -eq "Tunnel - Omniprox" } | Remove-Job -Force
+}
+
+function Restart-Omniprox
+{
+    Stop-Omniprox
+    Start-Omniprox
 }
 
 function Start-AzureHVTunnels
@@ -362,7 +378,6 @@ function Stop-JlevittTunnel
 {
     Get-Job -Name "Tunnel - Jlevitt" | Remove-Job -Force
 }
-
 
 
 function Get-DebugBuild
