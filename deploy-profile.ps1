@@ -1,19 +1,26 @@
 $deployParamsPath = ".deploy-profile-params.xml"
 $profileParams = @{}
+$expectedParams = @(
+    'HOME_DIR',
+    'USE_POSH_GIT',
+    'PROJECTS_DIR',
+    'EDITOR'
+)
 
 if (Test-Path $deployParamsPath)
 {
    $profileParams = Import-Clixml $deployParamsPath
 }
-else
+
+foreach($param in $expectedParams)
 {
-    $profileParams = @{
-        'HOME_DIR' = Read-Host "HOME_DIR?";
-        'USE_POSH_GIT' = Read-Host "USE_POSH_GIT?";
-        'PROJECTS_DIR' = Read-Host "PROJECTS_DIR?";
+    if (-not $profileParams.ContainsKey($param))
+    {
+        $profileParams[$param] = Read-Host "Value for $($param)?"
     }
-    $profileParams | Export-Clixml -Path $deployParamsPath
 }
+
+$profileParams | Export-Clixml -Path $deployParamsPath
 
 # From: https://github.com/craibuc/PsTokens/blob/master/Merge-Tokens.ps1
 <#

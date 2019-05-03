@@ -3,6 +3,7 @@
 $usePoshGit = __USE_POSH_GIT__
 $projectsDir = "__PROJECTS_DIR__"
 $homeDir = "__HOME_DIR__"
+$editor = "__EDITOR__"
 
 ### End params
 
@@ -179,7 +180,7 @@ function cdmig
 
 function edit-profile
 {
-    gvim $PROFILE
+    & $editor $PROFILE
 }
 
 function update-profile
