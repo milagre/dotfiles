@@ -1,8 +1,8 @@
 ### Profile params
 
-$usePoshGit = $true
-$projectsDir = "C:\projects"
-$homeDir = "C:\Users\jlevitt"
+$usePoshGit = __USE_POSH_GIT__
+$projectsDir = "__PROJECTS_DIR__"
+$homeDir = "__HOME_DIR__"
 
 ### End params
 
@@ -185,11 +185,6 @@ function edit-profile
 function update-profile
 {
     cp $PROFILE $projectsDir\personal\dotfiles\Microsoft.PowerShell_profile.ps1
-}
-
-function deploy-profile
-{
-    cp $projectsDir\personal\dotfiles\Microsoft.PowerShell_profile.ps1 $PROFILE
 }
 
 New-Alias which get-command
