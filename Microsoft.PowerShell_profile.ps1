@@ -1,11 +1,23 @@
-Import-Module Pscx
-Import-Module "C:\Tools\poshgit\dahlbyk-posh-git-a4faccd\src\posh-git.psm1"
+### Profile params
 
-Set-Location C:\projects
+$usePoshGit = $true
+$projectsDir = "C:\projects"
+$homeDir = "C:\Users\jlevitt"
+
+### End params
+
+
+if ($usePoshGit)
+{
+    Import-Module Pscx
+    Import-Module "C:\Tools\poshgit\dahlbyk-posh-git-a4faccd\src\posh-git.psm1"
+}
+
+Set-Location $projectsDir
 Remove-Variable -Force HOME
-Set-Variable HOME "C:\Users\jlevitt"
-$env:HOMEDRIVE="C:"
-$env:HOMEPATH="\Users\jlevitt"
+Set-Variable HOME $homeDir
+$env:HOMEDRIVE = Split-Path -Path $homeDir -Qualifier
+$env:HOMEPATH = Split-Path -Path $homeDir -NoQualifier
 
 ##### Git helpers
 function Grepout($pattern)
@@ -141,40 +153,43 @@ function nunit($path, $Version = "cwd")
 
 function ChangeDirProjects
 {
-    cd c:\projects
+    cd $projectsDir
 }
 
 Set-Alias projects ChangeDirProjects
 
 function ChangeDirHaskell
 {
-    cd C:\projects\personal\haskell\course\4
+    cd $projectsDir\personal\haskell\course\4
 }
 
 Set-Alias hk ChangeDirHaskellKatas
 
 function ChangeDirHaskellKatas
 {
-    cd C:\projects\personal\haskell-katas
+    cd $projectsDir\personal\haskell-katas
 }
 
 Set-Alias hs ChangeDirHaskell
 
 function cdmig
 {
-    cd C:\projects\agent\src\positronics_agent\v1_0\migrations
+    cd $projectsDir\agent\src\positronics_agent\v1_0\migrations
 }
 
-function EditProfile
+function edit-profile
 {
     gvim $PROFILE
 }
 
-Set-Alias edit-profile EditProfile
-
 function update-profile
 {
-    cp $PROFILE c:\projects\personal\dotfiles\Microsoft.PowerShell_profile.ps1
+    cp $PROFILE $projectsDir\personal\dotfiles\Microsoft.PowerShell_profile.ps1
+}
+
+function deploy-profile
+{
+    cp $projectsDir\personal\dotfiles\Microsoft.PowerShell_profile.ps1 $PROFILE
 }
 
 New-Alias which get-command
@@ -230,13 +245,13 @@ New-Alias python36 C:\Python36\python.exe
 
 function use-agent-env()
 {
-    C:\projects\agent\env\Scripts\activate.ps1
-    $env:PYTHONPATH = "C:\projects\agent\src;C:\projects\agent-aloha\src;C:\projects\agent-beyond\src;C:\projects\agent-cloud-connect\src;C:\projects\agent-common\src;C:\projects\agent-doshii\src;C:\projects\agent-infogenesis\src;C:\projects\agent-micros3700\src;C:\projects\agent-northstar\src;C:\projects\agent-positouch\src;C:\projects\agent-squirrel\src;C:\projects\agent-virtual\src;C:\projects\debug-helpers\src;"
+    . $projectsDir\agent\env\Scripts\activate.ps1
+    $env:PYTHONPATH = "$projectsDir\agent\src;$projectsDir\agent-aloha\src;$projectsDir\agent-beyond\src;$projectsDir\agent-cloud-connect\src;$projectsDir\agent-common\src;$projectsDir\agent-doshii\src;$projectsDir\agent-infogenesis\src;$projectsDir\agent-micros3700\src;$projectsDir\agent-northstar\src;$projectsDir\agent-positouch\src;$projectsDir\agent-squirrel\src;$projectsDir\agent-virtual\src;$projectsDir\debug-helpers\src;"
 }
 
 function use-mgit-env()
 {
-    C:\projects\multigit\env\Scripts\activate.ps1
+    . $projectsDir\multigit\env\Scripts\activate.ps1
 }
 
 if (-not $(ps pageant -ErrorAction SilentlyContinue))
@@ -256,7 +271,7 @@ if (-not $(ps AutoHotkey -ErrorAction SilentlyContinue))
     ~\default.ahk
 }
 
-$env:GOPATH = "C:\projects\go"
+$env:GOPATH = "$projectsDir\go"
 $env:TERM='xterm' # http://stefano.salvatori.cl/blog/2017/12/08/how-to-fix-open_stackdumpfile-dumping-stack-trace-to-less-exe-stackdump-gitcygwin/
 
 function Start-Omniprox
