@@ -264,7 +264,13 @@ if (-not $(ps pageant -ErrorAction SilentlyContinue))
 
 if (-not $(ps AutoHotkey -ErrorAction SilentlyContinue))
 {
-    ~\default.ahk
+    try
+    {
+        & "$homeDir\default.ahk"
+    }
+    catch
+    {
+    }
 }
 
 $env:GOPATH = "$projectsDir\go"
