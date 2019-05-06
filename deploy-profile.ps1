@@ -4,7 +4,8 @@ $expectedParams = @(
     'HOME_DIR',
     'USE_POSH_GIT',
     'PROJECTS_DIR',
-    'EDITOR'
+    'EDITOR',
+    'VM_TYPE'
 )
 
 if (Test-Path $deployParamsPath)

@@ -4,6 +4,7 @@ $usePoshGit = __USE_POSH_GIT__
 $projectsDir = "__PROJECTS_DIR__"
 $homeDir = "__HOME_DIR__"
 $editor = "__EDITOR__"
+$vm_type = "__VM_TYPE__"
 
 ### End params
 
@@ -24,7 +25,7 @@ $env:GIT_SSH = "$((which plink).Definition)"
 
 ### End environment variables
 
-##### Git helpers
+### Git helpers
 function Grepout($pattern)
 {
     git checkout $(git branch | grep $pattern).Trim()
@@ -55,6 +56,39 @@ function mpop()
 {
     mgitp agent pop
 }
+
+### End git helpers
+
+### Aloha specific
+
+if ($vm_type -eq "aloha")
+{
+    function kiber 
+    { 
+        ps *iber* | kill 
+    }
+
+    function copy-como()
+    {
+        kiber
+        sleep 3
+        copy C:\Users\aloha\dev\como-aloha\Artifacts\*.* C:\BootDrv\Aloha\BIN
+        copy C:\Users\aloha\dev\como-ui\Artifacts\*.* C:\Como\ComoApp
+        $env:TERM=17
+        C:\BootDrv\Aloha\IBERCFG.BAT
+        $env:TERM="xterm"
+    }
+
+    function copy-ui()
+    {
+        copy C:\Users\aloha\dev\como-ui\Artifacts\*.* C:\Como\ComoApp
+    }
+
+    $env:TERM='xterm' # http://stefano.salvatori.cl/blog/2017/12/08/how-to-fix-open_stackdumpfile-dumping-stack-trace-to-less-exe-stackdump-gitcygwin/
+}
+
+### End Aloha specific
+
 
 function Coalesce($a, $b)
 {
