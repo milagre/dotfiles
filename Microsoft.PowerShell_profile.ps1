@@ -7,18 +7,22 @@ $editor = "__EDITOR__"
 
 ### End params
 
+## Cmdlet Aliases
 
-if ($usePoshGit)
-{
-    Import-Module Pscx
-    Import-Module "C:\Tools\poshgit\dahlbyk-posh-git-a4faccd\src\posh-git.psm1"
-}
+New-Alias which Get-Command
+
+## End cmdlet Aliases
+
+### Environment variables
 
 Set-Location $projectsDir
 Remove-Variable -Force HOME
 Set-Variable HOME $homeDir
 $env:HOMEDRIVE = Split-Path -Path $homeDir -Qualifier
 $env:HOMEPATH = Split-Path -Path $homeDir -NoQualifier
+$env:GIT_SSH = "$((which plink).Definition)"
+
+### End environment variables
 
 ##### Git helpers
 function Grepout($pattern)
@@ -41,6 +45,16 @@ function ViewMergedLocal()
 }
 
 Set-Alias vml ViewMergedLocal
+
+function msave()
+{
+    mgitp agent save
+}
+
+function msave()
+{
+    mgitp agent save
+}
 
 function Coalesce($a, $b)
 {
@@ -187,8 +201,6 @@ function update-profile
 {
     cp $PROFILE $projectsDir\personal\dotfiles\Microsoft.PowerShell_profile.ps1
 }
-
-New-Alias which get-command
 
 function pull
 {
@@ -400,4 +412,11 @@ function Stop-JlevittTunnel
 function Get-DebugBuild
 {
     "$([DateTime]::Today.ToString("yy.M.d")).$(Get-Random -Minimum 1 -Maximum 1000)"
+}
+
+
+if ($usePoshGit)
+{
+    Import-Module Pscx
+    Import-Module "C:\Tools\poshgit\dahlbyk-posh-git-a4faccd\src\posh-git.psm1"
 }
