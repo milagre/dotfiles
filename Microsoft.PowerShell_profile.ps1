@@ -51,9 +51,9 @@ function msave()
     mgitp agent save
 }
 
-function msave()
+function mpop()
 {
-    mgitp agent save
+    mgitp agent pop
 }
 
 function Coalesce($a, $b)
