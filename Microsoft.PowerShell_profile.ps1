@@ -89,6 +89,16 @@ if ($vm_type -eq "aloha")
 
 ### End Aloha specific
 
+### POSitouch specific
+
+function Remove-Caches()
+{
+    rm 'C:\ProgramData\POS Agent\db\cache_gEc4Rcex_v1-0.db' -ErrorAction SilentlyContinue; rm 'C:\ProgramData\POS Agent\posi\positouch_0.db' -ErrorAction SilentlyContinue;
+}
+
+### End POSitouch specific
+
+
 
 function Coalesce($a, $b)
 {
