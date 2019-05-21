@@ -31,6 +31,7 @@
         "github.com/omnivore/giganto/"
     ],
     "go.formatTool": "goimports",
+    "go.gopath": "C:\\projects\\go",
     "go.liveErrors": {
         "enabled": true,
         "delay": 500
@@ -40,6 +41,9 @@
     "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
     "javascript.format.placeOpenBraceOnNewLineForControlBlocks": true,
     "telemetry.enableTelemetry": false,
+    "terminal.integrated.env.windows": {
+        "GOPATH": "C:\\projects\\go"
+    },
     "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe",
     "vim.handleKeys": {
         "<C-c>": false,
