@@ -63,9 +63,9 @@ function mpop()
 
 if ($vm_type -eq "aloha")
 {
-    function kiber 
-    { 
-        ps *iber* | kill 
+    function kiber
+    {
+        ps *iber* | kill
     }
 
     function copy-como()
@@ -244,6 +244,11 @@ function edit-profile
 function update-profile
 {
     cp $PROFILE $projectsDir\personal\dotfiles\Microsoft.PowerShell_profile.ps1
+}
+
+function update-vscode
+{
+    cp $homeDir\AppData\Roaming\Code\User\settings.json $projectsDir\personal\dotfiles\vscode-user-settings.json
 }
 
 function pull
