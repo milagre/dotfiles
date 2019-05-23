@@ -18,8 +18,8 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'tpope/vim-commentary'
 Plugin 'nvie/vim-flake8'
 Plugin 'othree/html5.vim'
-Plugin 'fatih/vim-go'
 Plugin 'godlygeek/tabular'
+Plugin 'fatih/vim-go'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -160,8 +160,7 @@ set expandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-set textwidth=100
-set nowrap
+set wrap
 set formatoptions-=t
 
 " ##### Backup, swap and undo file settings #####
@@ -194,6 +193,7 @@ autocmd BufEnter,BufRead,BufNewFile *.txt setfiletype txt
 autocmd FileType pau FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,xhtml,xml set omnifunc=htmlcomplete#CompleteTags tw=0
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python set omnifunc=pythoncomplete#Complete et sw=4 sts=4 ts=4 ai
 autocmd BufNewFile,BufRead *.lss set filetype=less
 autocmd BufNewFile,BufRead *.less set filetype=less
 autocmd BufNewFile,BufRead *.css set filetype=less
@@ -271,3 +271,12 @@ nnoremap <special> <C-d> :call DiffText(@a, @b, g:diffed_buffers)<CR>
 
 nnoremap <special> <C-d><C-d> :call WipeOutDiffs(g:diffed_buffers) <bar> let g:diffed_buffers=[]<CR>
 
+function! FormatJson()
+    %!jq .
+    if v:shell_error
+        let error=getline(1)
+        undo
+        echohl WarningMsg | echom error | echohl none
+    endif
+endfunction
+nnoremap <Leader>j :call FormatJson()<cr>
