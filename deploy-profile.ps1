@@ -91,3 +91,10 @@ function Merge-Tokens() {
 
 Get-Content .\Microsoft.PowerShell_profile.ps1 | Merge-Tokens -tokens $profileParams | Set-Content $PROFILE
 
+$installAgentModulePath = "~\Documents\WindowsPowerShell\Modules\InstallAgent"
+if (-not $(Test-Path $installAgentModulePath))
+{
+    mkdir ~\Documents\WindowsPowerShell\Modules\InstallAgent
+    cp .\InstallAgent.psm1 ~\Documents\WindowsPowerShell\Modules\InstallAgent\InstallAgent.psm1
+}
+

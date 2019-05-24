@@ -8,11 +8,11 @@ $vm_type = "__VM_TYPE__"
 
 ### End params
 
-## Cmdlet Aliases
+### Cmdlet Aliases
 
 New-Alias which Get-Command
 
-## End cmdlet Aliases
+### End cmdlet Aliases
 
 ### Environment variables
 
@@ -24,6 +24,12 @@ $env:HOMEPATH = Split-Path -Path $homeDir -NoQualifier
 $env:GIT_SSH = "$((which plink).Definition)"
 
 ### End environment variables
+
+### PS Modules
+
+Import-Module InstallAgent
+
+### End PS Modules
 
 ### Git helpers
 function Grepout($pattern)
@@ -249,6 +255,11 @@ function update-profile
 function update-vscode
 {
     cp $homeDir\AppData\Roaming\Code\User\settings.json $projectsDir\personal\dotfiles\vscode-user-settings.json
+}
+
+function edit($path)
+{
+    & $editor $path
 }
 
 function pull
