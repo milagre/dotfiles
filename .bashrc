@@ -37,9 +37,13 @@ if [ -f ~/.bash_functions ]; then
     . ~/.bash_functions
 fi
 
+export EDITOR=vim
+
 PATH=$PATH:$HOME/.bin
 
 PATH=$PATH:/usr/local/go/bin
 
-export EDITOR=vim
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
