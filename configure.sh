@@ -28,19 +28,16 @@ configure_vim() {
     mkdir -p ~/.vim/tmp
     mkdir -p ~/.vim/bundle
     mkdir -p ~/.vim/colors
-    install_vim_vundle
-    vim +PluginInstall +qall
-    install_vim_ycm
-}
-
-install_vim_vundle() {
+ 
+    # install vundle
     [ ! -d ~/.vim/bundle/Vundle.vim ] && git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     cd ~/.vim/bundle/Vundle.vim
     git pull
     cd -
-}
 
-install_vim_ycm() {
+    vim +PluginInstall +qall
+
+    # install ycm
     ## see https://github.com/Valloric/YouCompleteMe#full-installation-guide
     # Uncomment this business if you need C-family auto-completion
     if ! command -v cmake >/dev/null; then

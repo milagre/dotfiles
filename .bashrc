@@ -22,18 +22,8 @@ export PROMPT_COMMAND="history -a"
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
-
 # General auto-complete
 [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
-
 
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
@@ -49,8 +39,7 @@ fi
 if type brew &>/dev/null
 then
   HOMEBREW_PREFIX="$(brew --prefix)"
-  if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]]
-  then
+  if [[ -r "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh" ]] then
     source "${HOMEBREW_PREFIX}/etc/profile.d/bash_completion.sh"
   else
     for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*
