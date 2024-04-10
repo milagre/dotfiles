@@ -1,13 +1,8 @@
 #!/bin/bash
 
-. ~/.bash_functions
-
 configure_deps() {
-    if ! has_bin 'brew'; then
-        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-    fi
-
-    has_bin 'node' || brew install node
+    type brew &>/dev/null || /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    type node || brew install node
 
     if [ ! -d /usr/local/opt/coreutils ]; then
         brew install coreutils
@@ -28,7 +23,7 @@ configure_vim() {
     mkdir -p ~/.vim/tmp
     mkdir -p ~/.vim/bundle
     mkdir -p ~/.vim/colors
- 
+
     # install vundle
     [ ! -d ~/.vim/bundle/Vundle.vim ] && git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     cd ~/.vim/bundle/Vundle.vim
