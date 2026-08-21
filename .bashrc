@@ -40,10 +40,17 @@ fi
 export EDITOR=vim
 
 PATH=$PATH:$HOME/.bin
-
+PATH=$PATH:$HOME/go/bin
 PATH=$PATH:/usr/local/go/bin
+
+export GOFLAGS='-p=4'
+export GOCACHE="$HOME/.cache/go-build"
+export GOMODCACHE="$HOME/go/pkg/mod"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# add Pulumi to the PATH
+export PATH=$PATH:"$HOME/.pulumi/bin"
 
